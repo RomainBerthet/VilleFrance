@@ -142,16 +142,31 @@
 <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
 	integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
 	crossorigin=""></script>
-<script src="geo.js"></script>
 <script type="text/javascript">
 	// On initialise la latitude et la longitude de Paris (centre de la carte)
 	var lat = ${lati};
 	var lon = ${longi};
 	var macarte = null;
+	var data = {
+			"type" : "Feature",
+			"properties" : {
+				"style" : {
+					weight : 2,
+					color : "#999",
+					opacity : 1,
+					fillColor : "#B0DE5C",
+					fillOpacity : 0.8
+				}
+			},
+			"geometry" : {
+				"type" : "MultiPolygon",
+				"coordinates" : ${poly}
+		}
+	};
 	// Fonction d'initialisation de la carte
 	function initMap() {
 		// Créer l'objet "macarte" et l'insèrer dans l'élément HTML qui a l'ID "map"
-		macarte = L.map('map').setView([ lat, lon ], 5);
+		macarte = L.map('map').setView([ lat, lon ], 7);
 		//Ajouter un marker
 		var marker = L.marker([lat, lon]).addTo(macarte);
 		// Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
@@ -159,21 +174,7 @@
 			  maxZoom: 20, /* zoom limit of the map */
 			  id: 'mapbox.streets' /* mapbox.light / dark / streets / outdoors / satellite */
 			}).addTo(macarte);
-		const url = "http://polygons.openstreetmap.fr/get_geojson.py?id=1112844&params=0";
-// 		$.ajax({
-// 			url: url,
-// 			type: "GET",
-// 			success: function(result){
-// 				console.log(result)
-// 			},
-// 			error:function(error){
-// 				console.log('Error ${error}')
-// 			}
-// 		});
-// 		$.getJSON(url, function(result){
-// 			console.log(result)
-// 		});
-		L.geoJson([dole, arleuf, vilette]).addTo(macarte);
+		L.geoJson(data).addTo(macarte);
 	}
 	window.onload = function() {
 		// Fonction d'initialisation qui s'exécute lorsque le DOM est chargé

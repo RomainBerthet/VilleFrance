@@ -38,7 +38,6 @@
 	
 	<form method="POST" action="VilleUtilisation">
 		<div class="container" style="margin-top:100px;">
-		${villes}
 			<div class="row">
 				<div class="col">
 					<select name="ville1" class="browser-default custom-select">
