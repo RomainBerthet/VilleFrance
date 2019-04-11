@@ -1,8 +1,6 @@
 package ville.utilisation;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -69,7 +66,7 @@ public class ModifVille extends HttpServlet {
 		
 		post.setEntity(new UrlEncodedFormEntity(urlParameters));
 
-		HttpResponse response1 = client.execute(post);
+		client.execute(post);
 		//System.out.println("Response Code : " + response1.getStatusLine().getStatusCode());
 		
 		response.sendRedirect("ListeVilles");
