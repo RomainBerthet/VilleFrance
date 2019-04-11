@@ -20,7 +20,6 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
 
 import ville.bean.Ville;
 
@@ -130,30 +129,30 @@ public class InfosVilles extends HttpServlet {
 		Map<String, Object> allMap = map(response1.toString());
 		List<Map<String, Object>> weatherMap = null;
 		Map<String, Object> wMap = null;
-//		try {
-//			weatherMap = new ArrayList<Map<String, Object>>();
-//			String[] wm = allMap.get("weather").toString().replace("[", "").replace("]", "").split("},");
-//			for(int i=0; i<wm.length; i++) {
-//				//System.out.println(wm[i].toString().replace("=", ":").replace("id", "\"id\"").replace("main:", "\"main\":\"").replace(", description:", "\",\"description\":\"").replace(", icon", "\",\"icon\"").replace(", ", ","));
-//				weatherMap.add(map(wm[i].toString().replace("=", ":").replace("id", "\"id\"").replace("main:", "\"main\":\"").replace(", description:", "\",\"description\":\"").replace(", icon", "\",\"icon\"").replace(", ", ",")));
-//			}
-//		} catch(Exception e) {
-			//System.out.println(allMap.get("weather").toString().replace("[", "").replace("]", "").replace("=", ":").replace("id", "\"id\"").replace("main:", "\"main\":\"").replace(", description:", "\",\"description\":\"").replace(", icon", "\",\"icon\"").replace(", ", ",").split("},")[0]);
-			wMap = map(allMap.get("weather").toString().replace("[", "").replace("]", "").replace("=", ":").replace("id", "\"id\"").replace("main:", "\"main\":\"").replace(", description:", "\",\"description\":\"").replace(", icon", "\",\"icon\"").replace(", ", ",").split("},")[0]);
-//		}
+		try {
+			weatherMap = new ArrayList<Map<String, Object>>();
+			String[] wm = allMap.get("weather").toString().replace("[", "").replace("]", "").split("},");
+			for(int i=0; i<wm.length; i++) {
+				System.out.println("weatherMap: "+wm[i].toString().replace("=", ":").replace("id", "\"id\"").replace("main:", "\"main\":\"").replace(", description:", "\",\"description\":\"").replace(", icon", "\",\"icon\"").replace(", ", ","));
+				weatherMap.add(map(wm[i].toString().replace("=", ":").replace("id", "\"id\"").replace("main:", "\"main\":\"").replace(", description:", "\",\"description\":\"").replace(", icon", "\",\"icon\"").replace(", ", ",")));
+			}
+		} catch(Exception e) {
+			System.out.println("wMap: "+allMap.get("weather").toString().replace("[", "").replace("]", "").replace("=", ":").replace("id", "\"id\"").replace("main:", "\"main\":\"").replace(", description:", "\",\"description\":\"").replace(", icon", "\",\"icon\"").replace(", ", ","));
+			wMap = map(allMap.get("weather").toString().replace("[", "").replace("]", "").replace("=", ":").replace("id", "\"id\"").replace("main:", "\"main\":\"").replace(", description:", "\",\"description\":\"").replace(", icon", "\",\"icon\"").replace(", ", ","));
+		}
 		
 		Map<String, Object> mainMap = map(allMap.get("main").toString());
 		
-//		if(weatherMap!=null) {
-//			request.setAttribute("w_main", weatherMap.get(0).get("main"));
-//			request.setAttribute("w_description", weatherMap.get(0).get("description"));
-//			request.setAttribute("w_icon", weatherMap.get(0).get("icon"));
-//			
-//		} else if(wMap!=null) {
+		if(weatherMap!=null) {
+			request.setAttribute("w_main", weatherMap.get(0).get("main"));
+			request.setAttribute("w_description", weatherMap.get(0).get("description"));
+			request.setAttribute("w_icon", weatherMap.get(0).get("icon"));
+			
+		} else if(wMap!=null) {
 		request.setAttribute("w_main", wMap.get("main"));
 		request.setAttribute("w_description", wMap.get("description"));
 		request.setAttribute("w_icon", wMap.get("icon"));
-//		}
+		}
 //		
 		request.setAttribute("ville", ville.split("/")[2]);
 		request.setAttribute("temp", mainMap.get("temp"));
