@@ -72,7 +72,6 @@ public class InfosVilles extends HttpServlet {
 			villes.add(ville);
 		}
 		session.setAttribute("villes", villes);
-
 		RequestDispatcher dispat = request.getRequestDispatcher("infos.jsp");
 		dispat.forward(request, response);
 	}
@@ -131,7 +130,7 @@ public class InfosVilles extends HttpServlet {
 		request.setAttribute("w_main", wMap.get("main"));
 		request.setAttribute("w_description", wMap.get("description"));
 		request.setAttribute("w_icon", wMap.get("icon"));
-		
+
 		request.setAttribute("ville", ville.split("/")[2]);
 		request.setAttribute("temp", mainMap.get("temp"));
 		request.setAttribute("press", mainMap.get("pressure"));
@@ -164,8 +163,8 @@ public class InfosVilles extends HttpServlet {
 		}
 
 		request.setAttribute("population", population);
-		
-		String url4 = "https://global.mapit.mysociety.org/point/4326/"+longi+","+lati+"?type=O08";
+
+		String url4 = "https://global.mapit.mysociety.org/point/4326/" + longi + "," + lati + "?type=O08";
 		URL obj4 = new URL(url4);
 		HttpURLConnection con4 = (HttpURLConnection) obj4.openConnection();
 		con4.setRequestMethod("GET");
@@ -177,13 +176,13 @@ public class InfosVilles extends HttpServlet {
 			response4.append(inputLine4);
 		}
 		in4.close();
-		String sJson = "{"+response4.toString().substring(17, response4.toString().length()-1);
+		String sJson = "{" + response4.toString().substring(17, response4.toString().length() - 1);
 		Map<String, Object> villeinfos = map(sJson);
 		Map<String, Object> villeOSM = map(villeinfos.get("codes").toString());
 		String codeOSMString = String.valueOf(villeOSM.get("osm_rel"));
-		String code = codeOSMString.substring(0, codeOSMString.length()-2);
-		
-		String url3 = "http://polygons.openstreetmap.fr/get_geojson.py?id="+code;
+		String code = codeOSMString.substring(0, codeOSMString.length() - 2);
+
+		String url3 = "http://polygons.openstreetmap.fr/get_geojson.py?id=" + code;
 		URL obj3 = new URL(url3);
 		HttpURLConnection con3 = (HttpURLConnection) obj3.openConnection();
 		con3.setRequestMethod("GET");
