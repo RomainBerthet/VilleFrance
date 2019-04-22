@@ -36,12 +36,11 @@
 	</div>
 	</nav>
 
-	<form method="POST" action="ModifVille">
+	<form method="POST" action="AjoutVille">
 		<div class="container" style="margin-top:25px; width: 80rem;">
 		<div class="form-group">
 				<label>INSEE</label> 
-				<input type="hidden" class="form-control" name="insee" value="${insee}">
-				<input ype="text" class="form-control" value="${insee}">
+				<input type="text" class="form-control" name="insee" value="${insee}">
 			</div>
 			<div class="form-group">
 				<label>Nom</label> 
